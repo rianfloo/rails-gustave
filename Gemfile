@@ -8,6 +8,7 @@ gem 'figaro'
 gem 'jbuilder', '~> 2.0'
 gem 'devise', github: 'plataformatec/devise'
 gem 'redis'
+gem 'omniauth-facebook'
 
 gem 'sass-rails'
 gem 'jquery-rails'
