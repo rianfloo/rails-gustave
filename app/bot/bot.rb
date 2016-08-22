@@ -7,34 +7,39 @@ end
 
 include Facebook::Messenger
 
+Facebook::Messenger::Thread.set(
+  setting_type: 'greeting',
+  greeting: {
+    text: 'Welcome to Gustave'
+  }
+)
+
+Facebook::Messenger::Thread.set(
+  setting_type: 'call_to_actions',
+  thread_state: 'new_thread',
+  call_to_actions: [
+    {
+      payload: 'WELCOME'
+    }
+  ]
+)
+
 Bot.on :message do |message|
   puts "Received #{message.text} from #{message.sender}"
 
   case message.text
-  when /hello/i
+  when /bonjour/i
     Bot.deliver(
       recipient: message.sender,
       message: {
-        text: 'Hello, human!'
+        text: "Bonjour très cher ! Je m'appelle Gustave. Je suis ton sommelier virtuel."
       }
     )
-  when /something humans like/i
+  when /menu/i
     Bot.deliver(
       recipient: message.sender,
       message: {
-        text: 'I found something humans seem to like:'
-      }
-    )
-
-    Bot.deliver(
-      recipient: message.sender,
-      message: {
-        attachment: {
-          type: 'image',
-          payload: {
-            url: 'https://i.imgur.com/iMKrDQc.gif'
-          }
-        }
+        text: "En quoi puis-je vous aider aujourd'hui ?"
       }
     )
 
@@ -45,27 +50,39 @@ Bot.on :message do |message|
           type: 'template',
           payload: {
             template_type: 'button',
-            text: 'Did human like it?',
+            text: 'Un vin ? Un repas ?',
             buttons: [
-              { type: 'postback', title: 'Yes', payload: 'HUMAN_LIKED' },
-              { type: 'postback', title: 'No', payload: 'HUMAN_DISLIKED' }
+              { type: 'postback', title: 'Suggère-moi un vin', payload: 'VIN' },
+              { type: 'postback', title: 'Suggère-moi un repas', payload: 'REPAS' }
             ]
           }
         }
       }
     )
+
+  when /cave/i
+    Bot.deliver(
+      recipient: message.sender,
+      message: {
+        attachment: {
+        type: 'image'
+
+        }
+      }
+    )
+
   else
     Bot.deliver(
       recipient: message.sender,
       message: {
-        text: 'You are now marked for extermination.'
+        text: "Je n'ai pas très bien compris mon cher..."
       }
     )
 
     Bot.deliver(
       recipient: message.sender,
       message: {
-        text: 'Have a nice day.'
+        text: 'Ecris : menu pour accéder au menu :)'
       }
     )
   end
@@ -73,10 +90,14 @@ end
 
 Bot.on :postback do |postback|
   case postback.payload
-  when 'HUMAN_LIKED'
-    text = 'That makes bot happy!'
-  when 'HUMAN_DISLIKED'
-    text = 'Oh.'
+  when 'VIN'
+    text = "J'ai bien reçu le callback du vin"
+  when 'REPAS'
+    text = "J'ai bien reçu le callback du repas"
+  when 'GOUTS'
+    text = "J'ai bien reçu le callback de la cave"
+  when 'WELCOME'
+    text = "Bonjour très cher ! Je m'appelle Gustave. Je suis ton sommelier virtuel. Tu peux peux écrire menu pour me découvrir!"
   end
 
   Bot.deliver(
