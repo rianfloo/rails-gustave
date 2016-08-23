@@ -8,13 +8,6 @@ end
 include Facebook::Messenger
 
 Facebook::Messenger::Thread.set(
-  setting_type: 'greeting',
-  greeting: {
-    text: 'Welcome to Gustave'
-  }
-)
-
-Facebook::Messenger::Thread.set(
   setting_type: 'call_to_actions',
   thread_state: 'new_thread',
   call_to_actions: [
@@ -23,28 +16,9 @@ Facebook::Messenger::Thread.set(
     }
   ]
 )
-
-Bot.on :message do |message|
-  puts "Received #{message.text} from #{message.sender}"
-
-  case message.text
-  when /bonjour/i
-    Bot.deliver(
-      recipient: message.sender,
-      message: {
-        text: "Bonjour très cher ! Je m'appelle Gustave. Je suis ton sommelier virtuel."
-      }
-    )
-  when /menu/i
-    Bot.deliver(
-      recipient: message.sender,
-      message: {
-        text: "En quoi puis-je vous aider aujourd'hui ?"
-      }
-    )
-
-    Bot.deliver(
-      recipient: message.sender,
+  def menu(sender)
+   Bot.deliver(
+      recipient: sender,
       message: {
         attachment: {
           type: 'template',
@@ -59,15 +33,99 @@ Bot.on :message do |message|
         }
       }
     )
+  end
 
-  when /cave/i
+  def intro_menu(sender)
+    Bot.deliver(
+      recipient: sender,
+      message: {
+        text: "En quoi puis-je t'aider ?"
+      }
+    )
+  end
+
+def kind_of_meal(sender)
+  Bot.deliver(
+    recipient: sender,
+    message: {
+      text: "Que vas-tu manger ?"
+    }
+  )
+end
+
+def kind_of_wine(sender)
+  Bot.deliver(
+    recipient: sender,
+    message: {
+      text: "Tu veux déguster un rouge, blanc ou rosé ?"
+    }
+  )
+end
+
+def filter_wine(sender)
+  Bot.deliver(
+    recipient: sender,
+    message: {
+      text: "Veux-tu affiner la recherche par couleur ?"
+    }
+  )
+end
+
+Bot.on :message do |message|
+  puts "Received #{message.text} from #{message.sender}"
+
+  case message.text
+  when /bonjour/i
     Bot.deliver(
       recipient: message.sender,
       message: {
-        attachment: {
-        type: 'image'
+        text: "Bonjour très cher ! Je m'appelle Gustave. Je suis ton sommelier virtuel. Je peux te suggérer une bonne bouteille de vin ou un repas avec ton vin si tu l'as déjà. ;-)"
+      }
+    )
+    menu(message.sender)
 
+  when /menu/i
+    intro_menu(message.sender)
+    menu(message.sender)
+
+  when /🍷/i
+    Bot.deliver(
+      recipient: message.sender,
+      message: {
+        text: "Bonjour très cher ! Je m'appelle Gustave. Je suis ton sommelier virtuel. Je peux te suggérer une bonne bouteille de vin ou un repas avec ton vin si tu l'as déjà. ;-)"
+      }
+    )
+    menu(message.sender)
+
+  when /hello/i
+    Bot.deliver(
+      recipient: message.sender,
+      message: {
+        text: "Bonjour très cher ! Je m'appelle Gustave. Je suis ton sommelier virtuel. Je peux te suggérer une bonne bouteille de vin ou un repas avec ton vin si tu l'as déjà. ;-)"
+      }
+    )
+
+  when /oui/i
+    kind_of_wine(message.sender)
+
+  when /non/i
+      Bot.deliver(
+        recipient: message.sender,
+        message: {
+          text: "Très bien, je te laisse regarder les vins ! :)"
         }
+      )
+
+
+  when /boeuf/i
+    call_vin(message.sender)
+    filter_wine(message.sender)
+
+  when /vin/i
+    Bot.deliver(
+      recipient: message.sender,
+      message: {
+        text: "De quel vin parles-tu ? Ecris menu pour accéder aux fonctionnalités!"
       }
     )
 
@@ -88,24 +146,128 @@ Bot.on :message do |message|
   end
 end
 
+
+def call_vin(sender)
+  Bot.deliver(
+      recipient: sender,
+      message: {
+        text: "Voici ce que j'ai trouvé pour toi ! 🍷🍷🍷🍷🍷🍷 "
+      }
+    )
+  Bot.deliver(
+    recipient: sender,
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: 'generic',
+          elements: [
+            {
+              title: "Vin du jour coucou",
+              image_url: "http://lesgourmands2-0.com/wp-content/uploads/2014/06/game-of-thrones-vin-2.jpg",
+              subtitle: "Un petit vin de producteur",
+               buttons:[
+                {
+                  type: "web_url",
+                  url: "https://www.perdu.com",
+                  title: "Plus d'informations"
+                },
+                {
+                  type: "postback",
+                  title: "Sauvegarder ce vin",
+                  payload: "USER_DEFINED_PAYLOAD"
+                }
+              ]
+            },
+            {
+              title: "Vin du jour coucou",
+              image_url: "http://lesgourmands2-0.com/wp-content/uploads/2014/06/game-of-thrones-vin-2.jpg",
+              subtitle: "Un petit vin de producteur",
+               buttons:[
+                {
+                  type: "web_url",
+                  url: "https://www.perdu.com",
+                  title: "Plus d'informations"
+                },
+                {
+                  type: "postback",
+                  title: "Sauvegarder ce vin",
+                  payload: "USER_DEFINED_PAYLOAD"
+                }
+              ]
+            },
+            {
+              title: "Vin du jour coucou",
+              image_url: "http://lesgourmands2-0.com/wp-content/uploads/2014/06/game-of-thrones-vin-2.jpg",
+              subtitle: "Un petit vin de producteur",
+               buttons:[
+                {
+                  type: "web_url",
+                  url: "https://www.perdu.com",
+                  title: "Plus d'informations"
+                },
+                {
+                  type: "postback",
+                  title: "Sauvegarder ce vin",
+                  payload: "USER_DEFINED_PAYLOAD"
+                }
+              ]
+            },
+            {
+              title: "Vin du jour coucou",
+              image_url: "http://lesgourmands2-0.com/wp-content/uploads/2014/06/game-of-thrones-vin-2.jpg",
+              subtitle: "Un petit vin de producteur",
+               buttons:[
+                {
+                  type: "web_url",
+                  url: "https://www.perdu.com",
+                  title: "Plus d'informations"
+                },
+                {
+                  type: "postback",
+                  title: "Sauvegarder ce vin",
+                  payload: "USER_DEFINED_PAYLOAD"
+                }
+              ]
+            },
+            {
+              title: "Vin du jour coucou",
+              image_url: "http://lesgourmands2-0.com/wp-content/uploads/2014/06/game-of-thrones-vin-2.jpg",
+              subtitle: "Un petit vin de producteur",
+               buttons:[
+                {
+                  type: "web_url",
+                  url: "https://www.perdu.com",
+                  title: "Plus d'informations"
+                },
+                {
+                  type: "postback",
+                  title: "Sauvegarder ce vin",
+                  payload: "USER_DEFINED_PAYLOAD"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  )
+end
+
 Bot.on :postback do |postback|
+
   case postback.payload
+
+  when 'WELCOME'
+    text = "Bonjour très cher ! Je m'appelle Gustave. Je suis ton sommelier virtuel. Tu peux peux écrire menu pour me découvrir!"
   when 'VIN'
-    text = "J'ai bien reçu le callback du vin"
+    kind_of_meal(postback.sender)
   when 'REPAS'
     text = "J'ai bien reçu le callback du repas"
   when 'GOUTS'
     text = "J'ai bien reçu le callback de la cave"
-  when 'WELCOME'
-    text = "Bonjour très cher ! Je m'appelle Gustave. Je suis ton sommelier virtuel. Tu peux peux écrire menu pour me découvrir!"
   end
 
-  Bot.deliver(
-    recipient: postback.sender,
-    message: {
-      text: text
-    }
-  )
 end
 
 Bot.on :delivery do |delivery|
