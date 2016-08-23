@@ -105,9 +105,6 @@ Bot.on :message do |message|
       }
     )
 
-  when /oui/i
-    kind_of_wine(message.sender)
-
   when /non/i
       Bot.deliver(
         recipient: message.sender,
@@ -119,7 +116,9 @@ Bot.on :message do |message|
 
   when /boeuf/i
     call_vin(message.sender)
-    filter_wine(message.sender)
+
+  when /rouge/i
+    call_vin_rouge(message.sender)
 
   when /vin/i
     Bot.deliver(
@@ -152,6 +151,113 @@ def call_vin(sender)
       recipient: sender,
       message: {
         text: "Voici ce que j'ai trouvé pour toi ! 🍷🍷🍷🍷🍷🍷 "
+      }
+    )
+  Bot.deliver(
+    recipient: sender,
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: 'generic',
+          elements: [
+            {
+              title: "Vin du jour coucou",
+              image_url: "http://lesgourmands2-0.com/wp-content/uploads/2014/06/game-of-thrones-vin-2.jpg",
+              subtitle: "Un petit vin de producteur",
+               buttons:[
+                {
+                  type: "web_url",
+                  url: "https://www.perdu.com",
+                  title: "Plus d'informations"
+                },
+                {
+                  type: "postback",
+                  title: "Sauvegarder ce vin",
+                  payload: "USER_DEFINED_PAYLOAD"
+                }
+              ]
+            },
+            {
+              title: "Vin du jour coucou",
+              image_url: "http://lesgourmands2-0.com/wp-content/uploads/2014/06/game-of-thrones-vin-2.jpg",
+              subtitle: "Un petit vin de producteur",
+               buttons:[
+                {
+                  type: "web_url",
+                  url: "https://www.perdu.com",
+                  title: "Plus d'informations"
+                },
+                {
+                  type: "postback",
+                  title: "Sauvegarder ce vin",
+                  payload: "USER_DEFINED_PAYLOAD"
+                }
+              ]
+            },
+            {
+              title: "Vin du jour coucou",
+              image_url: "http://lesgourmands2-0.com/wp-content/uploads/2014/06/game-of-thrones-vin-2.jpg",
+              subtitle: "Un petit vin de producteur",
+               buttons:[
+                {
+                  type: "web_url",
+                  url: "https://www.perdu.com",
+                  title: "Plus d'informations"
+                },
+                {
+                  type: "postback",
+                  title: "Sauvegarder ce vin",
+                  payload: "USER_DEFINED_PAYLOAD"
+                }
+              ]
+            },
+            {
+              title: "Vin du jour coucou",
+              image_url: "http://lesgourmands2-0.com/wp-content/uploads/2014/06/game-of-thrones-vin-2.jpg",
+              subtitle: "Un petit vin de producteur",
+               buttons:[
+                {
+                  type: "web_url",
+                  url: "https://www.perdu.com",
+                  title: "Plus d'informations"
+                },
+                {
+                  type: "postback",
+                  title: "Sauvegarder ce vin",
+                  payload: "USER_DEFINED_PAYLOAD"
+                }
+              ]
+            },
+            {
+              title: "Pas satisfait ?",
+              image_url: "http://www.islamiclife.com/2016/02/29/7746.jpg",
+              subtitle: "Essayer une nouvelle recherche ou filtre les vins!",
+               buttons:[
+                {
+                  type: "postback",
+                  title: "Nouvelle recherche",
+                  payload: "WELCOME"
+                },
+                {
+                  type: "postback",
+                  title: "Affiner la recherche",
+                  payload: "FILTER"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  )
+end
+
+def call_vin_rouge(sender)
+  Bot.deliver(
+      recipient: sender,
+      message: {
+        text: "Et voici du rouge! 🍷🍷🍷🍷🍷🍷 "
       }
     )
   Bot.deliver(
@@ -266,6 +372,8 @@ Bot.on :postback do |postback|
     text = "J'ai bien reçu le callback du repas"
   when 'GOUTS'
     text = "J'ai bien reçu le callback de la cave"
+  when 'FILTER'
+    kind_of_wine(postback.sender)
   end
 
 end
