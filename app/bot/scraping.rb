@@ -68,19 +68,30 @@ doc = File.open(File.dirname(__FILE__) + "/response.html")
 
 html_doc = Nokogiri::HTML.parse(doc)
 
-html_doc.search('.cardresu').each do |vin|
-    vin.css('.AccordV').each do |v|
-     puts v.text
-    end
-    puts "----------------"
-    vin.css('.TV.AC').each do |c|
-     puts c.text
-    end
-    puts "----------------"
-    vin.css('.AL.rdi1').each do |r|
-     puts r.text
-    end
+wines = []
+
+html_doc.search('.ClsTRPaire, .ClsTR')[0..2].each do |vin|
+
+  wines << {
+    appelation: vin.css('.AccordV').text,
+    color: vin.css('.TV.AC').text,
+    area: vin.css('.AL.rdi1').text
+  }
+
+    # vin.css('.AccordV').each do |v|
+    #  puts v.text
+    # end
+    # puts "----------------"
+    # vin.css('.TV.AC').each do |c|
+    #  puts c.text
+    # end
+    # puts "----------------"
+    # vin.css('.AL.rdi1').each do |r|
+    #  puts r.text
+    # end
 end
+
+puts wines
 # html_doc.search('.AccordV').each do |vin|
 #   puts vin.text
 # end
