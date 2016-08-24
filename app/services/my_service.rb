@@ -1,3 +1,5 @@
+require 'open-uri'
+
 # You just have to call MyService.run("awesome data")
 class MyService < ServiceBase
   attr_accessor :useful_variable
@@ -7,24 +9,20 @@ class MyService < ServiceBase
   end
 
   def run
-    parsing_data()
+    parsing_xml_from_ingredient()
   end
 
   private
 
-  def parsing_data(doc)
-    html_doc = Nokogiri::HTML.parse(doc)
+  def parsing_xml_from_ingredient(xml)
+    xml = open(xml)
+    vins = Hash.from_xml(xml)
+    puts vins["accords_plat"]["accords"]["vin"][0..2]
+  end
 
-    wines = []
-
-    html_doc.search('.ClsTRPaire, .ClsTR')[0..2].each do |vin|
-
-      wines << {
-        appelation: vin.css('.AccordV').text,
-        color: vin.css('.TV.AC').text,
-        area: vin.css('.AL.rdi1').text
-      }
-    end
-    wines
+  def parsing_xml_from_wine(xml)
+    xml = open(xml)
+    dishes = Hash.from_xml(xml)
+    puts dishes["accords_vin"]["accords"]["plat"]
   end
 end
