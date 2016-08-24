@@ -74,6 +74,8 @@ end
 Bot.on :message do |message|
   puts "Received #{message.text} from #{message.sender}"
 
+  @user_facebook = message.sender
+
   case message.text
   when /bonjour/i
     Bot.deliver(
