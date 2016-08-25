@@ -1,0 +1,16 @@
+<div class="main-wrap">
+    <input id="slide-sidebar" type="checkbox" role="button" />
+        <label for="slide-sidebar"><span><i class="fa fa-times" aria-hidden="true"></i></span></label>
+    <div class="sidebar">
+      <div class="text-center">
+        <h1>Profil</h1>
+        <%= image_tag "http://placehold.it/150x150", class: "avatar_dashboard" %>
+        <%= current_user.first_name %>
+      </div>
+    </div>
+    <div class="portfolio">
+      <div class="text-center">
+        <h1>Ma Dashboard</h1>
+      </div>
+    </div>
+</div>

@@ -74,6 +74,9 @@ end
 Bot.on :message do |message|
   puts "Received #{message.text} from #{message.sender}"
 
+
+  @mesenger_id = message.sender
+
   case message.text
   when /bonjour/i
     Bot.deliver(
@@ -83,6 +86,7 @@ Bot.on :message do |message|
       }
     )
     menu(message.sender)
+
 
   when /menu/i
     intro_menu(message.sender)

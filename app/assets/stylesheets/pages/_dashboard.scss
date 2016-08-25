@@ -1,0 +1,55 @@
+.sidebar {
+    background-color: #7C7877;
+    width: 150px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.sidebar h1 {
+    color: white;
+}
+
+.portfolio {
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 150px;
+    right: 0;
+    bottom: 0;
+
+    -moz-transition: left 0.5s ease;
+    transition: left 0.5s ease;
+}
+
+input[type=checkbox] {
+   display: none;
+}
+
+input:checked ~ .portfolio {
+    left: 0;
+}
+
+input:checked ~ label {
+    left: 0;
+}
+
+label {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 164px;
+    color: #ABD0CE;
+    font-size: 26px;
+
+    -moz-transition: left 0.5s ease;
+    transition: left 0.5s ease;
+}
+
+
+.avatar_dashboard {
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+}
