@@ -75,7 +75,8 @@ Bot.on :message do |message|
   puts "Received #{message.text} from #{message.sender}"
 
 
-  @mesenger_id = message.sender
+  @mesenger_id = message.sender["id"]
+  User.find_or_create_by_messenger_id(@mesenger_id)
 
   case message.text
   when /bonjour/i

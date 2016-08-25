@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
+         :recoverable, :rememberable, :trackable,
          :omniauthable, omniauth_providers: [:facebook]
 
   def self.find_for_facebook_oauth(auth)
@@ -13,6 +13,7 @@ class User < ApplicationRecord
     user_params[:token] = auth.credentials.token
     user_params[:token_expiry] = Time.at(auth.credentials.expires_at)
 
+    # find by uniq fb
     user = User.where(provider: auth.provider, uid: auth.uid).first
     user ||= User.where(email: auth.info.email).first # User did a regular sign up in the past.
     if user
@@ -24,5 +25,20 @@ class User < ApplicationRecord
     end
 
     return user
+  end
+
+  def self.find_or_create_by_messenger_id(messenger_id)
+    # aller chercher le uniq fb
+    messenger_hash = GetMessengerId.run(messenger_id)
+    uniq_facebook = UniqFacebook.run(messenger_hash["profile_pic"])
+    # chercher si il existe dans la base,
+    if User.where(uniq_facebook: uniq_facebook).empty?
+    # si il existe pas, le créer
+      #=> returns true
+      User.create(GetMessengerId.run(messenger_id))
+    # update les infos
+    else
+      User.update(GetMessengerId.run(messenger_id))
+    end
   end
 end
