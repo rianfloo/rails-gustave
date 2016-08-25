@@ -74,14 +74,12 @@ end
 Bot.on :message do |message|
   puts "Received #{message.text} from #{message.sender}"
 
-  @mesenger_id = message.sender
-
   case message.text
   when /bonjour/i
     Bot.deliver(
       recipient: message.sender,
       message: {
-        text: "Bonjour #{@mesenger_id["id"]} ! Je m'appelle Gustave. Je suis ton sommelier virtuel. Je peux te suggérer une bonne bouteille de vin ou un repas avec ton vin si tu l'as déjà. ;-)"
+        text: "Bonjour #{GetMessengerId.run(message.sender["id"])["first_name"]}! Je m'appelle Gustave. Je suis ton sommelier virtuel. Je peux te suggérer une bonne bouteille de vin ou un repas avec ton vin si tu l'as déjà. ;-)"
       }
     )
     menu(message.sender)
