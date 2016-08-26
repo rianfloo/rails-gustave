@@ -45,7 +45,9 @@ Facebook::Messenger::Thread.set(
   end
 
 def kind_of_meal(sender)
-  session[:step] = :dish
+  user = User.find_or_create_by_messenger_id(message.sender["id"])
+  user.steps.new(name: "dish")
+
   Bot.deliver(
     recipient: sender,
     message: {
@@ -77,12 +79,14 @@ Bot.on :message do |message|
 
 
   @mesenger_id = message.sender["id"]
-  User.find_or_create_by_messenger_id(@mesenger_id)
+  user = User.find_or_create_by_messenger_id(@mesenger_id)
 
-  if session[:step] == :dish
-    puts "=" * 100
-    puts message.text
-    puts "=" * 100
+  last_step = Step.where(user: user).order({ created_at: :desc }).take
+  last_step.update(response: message.text)
+
+  case last_step.name
+  when "dish"
+
   end
 
   case message.text
@@ -127,6 +131,7 @@ Bot.on :message do |message|
 
 
   when /boeuf/i
+
     call_vin(message.sender)
 
   when /rouge/i
