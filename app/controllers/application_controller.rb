@@ -3,6 +3,6 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
   def after_sign_in_path_for(resource)
-    request.env['omniauth.origin'] || dashboard_path
+    dashboard_path
   end
 end

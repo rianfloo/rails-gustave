@@ -10,9 +10,14 @@
 
       <div class="phrase"> </div>
 
-      <%= link_to '#', class: 'button button-facebook facebook-connect' do %>
-        <i class="fa fa-facebook" aria-hidden="true"></i>Se connecter Facebook
-      <% end %>
+
+
+        <%- User.omniauth_providers.each do |provider| %>
+          <%= link_to omniauth_authorize_path(User, provider), class: "button button-facebook facebook-connect" do %>
+            <i class="fa fa-facebook" aria-hidden="true"></i>Se connecter Facebook
+          <% end %>
+        <% end %>
+
 
       <div class='messenger-btn'>
         <a class='button' href='https://www.messenger.com/t/gustavesommelier' onclick='event.preventDefault(); openMessenger()'>Message Gustave
