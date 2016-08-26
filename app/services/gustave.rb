@@ -16,12 +16,12 @@ class Gustave < ServiceBase
       parsing_xml_from_ingredient(response_xml)
         # If params
         # api_url + params
-    elsif @request[:wine]
-      wine = @request[:wine]
-      wine_type = ? # DEFINE WITH SYLVAIN
-      api_url = "http://www.platsnetvins.com/api-xml/j-goillot-n9mvld5bp-accords-vin-xml.php?nomvin=#{wine}&typevin=#{wine_type}"
-      response_xml = RestClient.get api_url
-      parsing_xml_from_wine(response_xml)
+    # elsif @request[:wine]
+    #   wine = @request[:wine]
+    #   # wine_type = ? # DEFINE WITH SYLVAIN
+    #   api_url = "http://www.platsnetvins.com/api-xml/j-goillot-n9mvld5bp-accords-vin-xml.php?nomvin=#{wine}&typevin=#{wine_type}"
+    #   response_xml = RestClient.get api_url
+    #   parsing_xml_from_wine(response_xml)
     end
   end
 
