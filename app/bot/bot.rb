@@ -45,6 +45,7 @@ Facebook::Messenger::Thread.set(
   end
 
 def kind_of_meal(sender)
+  session[:step] = :dish
   Bot.deliver(
     recipient: sender,
     message: {
@@ -77,6 +78,12 @@ Bot.on :message do |message|
 
   @mesenger_id = message.sender["id"]
   User.find_or_create_by_messenger_id(@mesenger_id)
+
+  if session[:step] == :dish
+    puts "=" * 100
+    puts message.text
+    puts "=" * 100
+  end
 
   case message.text
   when /bonjour/i
