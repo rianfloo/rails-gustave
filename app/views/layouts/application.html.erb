@@ -7,9 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <%= stylesheet_link_tag    'application', media: 'all' %>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:600,700" rel="stylesheet">
   </head>
   <body>
     <%= yield %>
     <%= javascript_include_tag 'application' %>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/core.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.4/typed.min.js"></script>
+  <script>
+    $(function(){
+        $(".phrase").typed({
+          strings: ["Quel vin avec votre poulet ?", "Quel repas avec votre Château Margaux ?", "Jeremy est un gros chineur"],
+          typeSpeed: 40,
+          backSpeed: 10,
+          showCursor: false,
+          startDelay: 10,
+          loop: true
+        });
+    });
+  </script>
   </body>
 </html>
