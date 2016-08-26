@@ -10,12 +10,18 @@ class Gustave < ServiceBase
 
   def run
     if @request[:dish]
-      # composer l'url vers l'api => url
-      # aller chercher le xml => xml (envoyer request[:dish] + params)
-      # -> RestClient.post ...
-      # parsing_xml_from_ingredient(xml)
+      dish = @request[:dish]
+      api_url = "http://www.platsnetvins.com/api-xml/j-goillot-n9mvld5bp-accords-plat-xml.php?nomplat=#{dish}"
+      response_xml = RestClient.get api_url #, {:params => {:id => 50, 'foo' => 'bar'}}
+      parsing_xml_from_ingredient(response_xml)
+        # If params
+        # api_url + params
     elsif @request[:wine]
-      # même traitement pour le wine
+      wine = @request[:wine]
+      wine_type = ? # DEFINE WITH SYLVAIN
+      api_url = "http://www.platsnetvins.com/api-xml/j-goillot-n9mvld5bp-accords-vin-xml.php?nomvin=#{wine}&typevin=#{wine_type}"
+      response_xml = RestClient.get api_url
+      parsing_xml_from_wine(response_xml)
     end
   end
 
