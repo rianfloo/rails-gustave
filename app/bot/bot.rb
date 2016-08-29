@@ -7,11 +7,11 @@ end
 
 include Facebook::Messenger
 
-Facebook::Messenger::Thread.set(
-  setting_type: 'call_to_actions',
-  thread_state: 'new_thread',
-  call_to_actions: [{ payload: 'WELCOME' }]
-)
+# Facebook::Messenger::Thread.set(
+#   setting_type: 'call_to_actions',
+#   thread_state: 'new_thread',
+#   call_to_actions: [{ payload: 'HIGUSTAVE' }]
+# )
 
 def menu(sender)
   Bot.deliver(
@@ -138,20 +138,20 @@ Bot.on :message do |message|
       }
     )
 
-  else
-    Bot.deliver(
-      recipient: message.sender,
-      message: {
-        text: "Je n'ai pas très bien compris mon cher..."
-      }
-    )
+  # else
+  #   Bot.deliver(
+  #     recipient: message.sender,
+  #     message: {
+  #       text: "Je n'ai pas très bien compris mon cher..."
+  #     }
+  #   )
 
-    Bot.deliver(
-      recipient: message.sender,
-      message: {
-        text: 'Ecris : menu pour accéder au menu :)'
-      }
-    )
+  #   Bot.deliver(
+  #     recipient: message.sender,
+  #     message: {
+  #       text: 'Ecris : menu pour accéder au menu :)'
+  #     }
+  #   )
   end
 end
 
@@ -208,7 +208,7 @@ def call_vin(sender, dish)
       {
         type: "postback",
         title: "Nouvelle recherche",
-        payload: "WELCOME"
+        payload: "HIGUSTAVE"
       },
       {
         type: "postback",
@@ -344,7 +344,7 @@ Bot.on :postback do |postback|
 
   case postback.payload
 
-  when 'WELCOME'
+  when 'HIGUSTAVE'
     text = "Bonjour très cher ! Je m'appelle Gustave. Je suis ton sommelier virtuel. Tu peux peux écrire menu pour me découvrir!"
   when 'VIN'
     kind_of_meal(postback.sender)
