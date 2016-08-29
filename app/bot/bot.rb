@@ -7,11 +7,11 @@ end
 
 include Facebook::Messenger
 
-Facebook::Messenger::Thread.set(
-  setting_type: 'call_to_actions',
-  thread_state: 'new_thread',
-  call_to_actions: [{ payload: 'WELCOME' }]
-)
+# Facebook::Messenger::Thread.set(
+#   setting_type: 'call_to_actions',
+#   thread_state: 'new_thread',
+#   call_to_actions: [{ payload: 'HIGUSTAVE' }]
+# )
 
 def menu(sender)
   Bot.deliver(
@@ -42,6 +42,8 @@ def intro_menu(sender)
 end
 
 def kind_of_meal(sender)
+  @user.steps.create(name: "dish")
+
   Bot.deliver(
     recipient: sender,
     message: {
@@ -72,8 +74,18 @@ Bot.on :message do |message|
   puts "Received #{message.text} from #{message.sender}"
 
 
-  @mesenger_id = message.sender["id"]
-  User.find_or_create_by_messenger_id(@mesenger_id)
+  @user = User.find_or_create_by_messenger_id(message.sender["id"])
+
+  last_step = Step.where(user: @user).order({ created_at: :desc }).take
+
+
+  if last_step
+    case last_step.name
+    when "dish"
+      last_step.update(response: message.text)
+      call_vin(message.sender, last_step[:response])
+    end
+  end
 
   case message.text
   when /bonjour/i
@@ -115,10 +127,6 @@ Bot.on :message do |message|
         }
       )
 
-
-  when /poulet/i
-    call_vin(message.sender)
-
   when /rouge/i
     call_vin_rouge(message.sender)
 
@@ -130,20 +138,20 @@ Bot.on :message do |message|
       }
     )
 
-  else
-    Bot.deliver(
-      recipient: message.sender,
-      message: {
-        text: "Je n'ai pas très bien compris mon cher..."
-      }
-    )
+  # else
+  #   Bot.deliver(
+  #     recipient: message.sender,
+  #     message: {
+  #       text: "Je n'ai pas très bien compris mon cher..."
+  #     }
+  #   )
 
-    Bot.deliver(
-      recipient: message.sender,
-      message: {
-        text: 'Ecris : menu pour accéder au menu :)'
-      }
-    )
+  #   Bot.deliver(
+  #     recipient: message.sender,
+  #     message: {
+  #       text: 'Ecris : menu pour accéder au menu :)'
+  #     }
+  #   )
   end
 end
 
@@ -151,7 +159,7 @@ def wine_picture(vin_id)
   if Rails.env == "production"
     root_path = "https://bonjourgustave.herokuapp.com/assets/"
   else
-    root_path = "https://34a8e09d.ngrok.io/assets/"
+    root_path = "https://08a764ff.ngrok.io/assets/"
   end
 
   if vin_id == 2 || vin_id == 4 || vin_id == 5
@@ -164,7 +172,7 @@ def wine_picture(vin_id)
 end
 
 
-def call_vin(sender)
+def call_vin(sender, dish)
   Bot.deliver(
     recipient: sender,
     message: {
@@ -172,7 +180,7 @@ def call_vin(sender)
     }
   )
   elements = []
-  Gustave.run({ dish: "Poulet" }).each do |vin|
+  Gustave.run({ dish: dish }).each do |vin|
     elements << {
       title: vin["nom_vin"],
       image_url: wine_picture(vin["id_type_vin"].to_i),
@@ -200,7 +208,7 @@ def call_vin(sender)
       {
         type: "postback",
         title: "Nouvelle recherche",
-        payload: "WELCOME"
+        payload: "HIGUSTAVE"
       },
       {
         type: "postback",
@@ -336,7 +344,7 @@ Bot.on :postback do |postback|
 
   case postback.payload
 
-  when 'WELCOME'
+  when 'HIGUSTAVE'
     text = "Bonjour très cher ! Je m'appelle Gustave. Je suis ton sommelier virtuel. Tu peux peux écrire menu pour me découvrir!"
   when 'VIN'
     kind_of_meal(postback.sender)

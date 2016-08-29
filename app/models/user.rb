@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :meals, dependent: :destroy
+  has_many :steps
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -43,5 +44,6 @@ class User < ApplicationRecord
       # si il existe pas, le créer
       User.create(user_params)
     end
+    user
   end
 end
