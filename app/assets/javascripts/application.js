@@ -15,4 +15,9 @@ function openMessenger() {
       }
     }, 1)
   }, 1000);
-}
+};
+
+var myEl = document.getElementById('card-animations');
+myEl.addEventListener('click', function() {
+  $('#cards').addClass('flipper');
+}, false);
