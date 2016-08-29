@@ -42,9 +42,7 @@ def intro_menu(sender)
 end
 
 def kind_of_meal(sender)
-
-  # user = User.find_or_create_by_messenger_id(message.sender["id"])
-  # user.steps.new(name: "dish")
+  @user.steps.create(name: "dish")
 
   Bot.deliver(
     recipient: sender,
@@ -76,15 +74,17 @@ Bot.on :message do |message|
   puts "Received #{message.text} from #{message.sender}"
 
 
-  @mesenger_id = message.sender["id"]
-  user = User.find_or_create_by_messenger_id(@mesenger_id)
+  @user = User.find_or_create_by_messenger_id(message.sender["id"])
 
-  last_step = Step.where(user: user).order({ created_at: :desc }).take
+  last_step = Step.where(user: @user).order({ created_at: :desc }).take
 
 
-  case last_step.name
-  when "dish"
-    last_step.update(response: message.text)
+  if last_step
+    case last_step.name
+    when "dish"
+      last_step.update(response: message.text)
+      call_vin(message.sender, last_step[:response])
+    end
   end
 
   case message.text
@@ -127,10 +127,6 @@ Bot.on :message do |message|
         }
       )
 
-
-  when /poulet/i
-    call_vin(message.sender)
-
   when /rouge/i
     call_vin_rouge(message.sender)
 
@@ -163,7 +159,7 @@ def wine_picture(vin_id)
   if Rails.env == "production"
     root_path = "https://bonjourgustave.herokuapp.com/assets/"
   else
-    root_path = "https://34a8e09d.ngrok.io/assets/"
+    root_path = "https://08a764ff.ngrok.io/assets/"
   end
 
   if vin_id == 2 || vin_id == 4 || vin_id == 5
@@ -176,7 +172,7 @@ def wine_picture(vin_id)
 end
 
 
-def call_vin(sender)
+def call_vin(sender, dish)
   Bot.deliver(
     recipient: sender,
     message: {
@@ -184,10 +180,10 @@ def call_vin(sender)
     }
   )
   elements = []
-  Gustave.run({ dish: "Poulet" }).each do |vin|
+  Gustave.run({ dish: dish }).each do |vin|
     elements << {
       title: vin["nom_vin"],
-      image_url: "http://www.islamiclife.com/2016/02/29/7746.jpg",
+      image_url: wine_picture(vin["id_type_vin"].to_i),
       subtitle: "Un vin #{vin["type_vin"]} de la region #{vin["nom_region"]}",
        buttons:[
         {

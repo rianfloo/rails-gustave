@@ -44,5 +44,6 @@ class User < ApplicationRecord
       # si il existe pas, le créer
       User.create(user_params)
     end
+    user
   end
 end
