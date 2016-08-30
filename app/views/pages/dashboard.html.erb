@@ -1,43 +1,80 @@
 <%= render 'shared/flashes' %>
 
 <div class="main-wrap">
-    <input id="slide-sidebar" type="checkbox" role="button" />
-        <label for="slide-sidebar"><span><i class="fa fa-times" aria-hidden="true"></i></span></label>
     <div class="sidebar">
-      <div class="text-center">
-        <h1>Profil</h1>
-        <%= image_tag "http://placehold.it/150x150", class: "avatar_dashboard" %>
-        <%= current_user.first_name %>
-      </div>
+      <%= image_tag "gustave.svg", class: "gustave" %>
     </div>
     <div class="portfolio">
-      <!-- <div class="text-center">
-        <h1>Ma petite cave à vin</h1>
-          <div>
-            <p>
-              Mes vins préférés
-             </p>
-              <ul class="list-inline">
-                <li>Vin: Château Margaux</li>
-                <li>Repas associés : Poulet</li>
+      <div class="account">
+        <ul class="list-inline">
+          <li>
+            <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle profile-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <%= current_user.first_name %> <%= current_user.last_name %> <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><%= link_to('Se déconnecter', destroy_user_session_path, :method => :delete) %></a></li>
               </ul>
+            </div>
+          </li>
+          <li>
+            <%= image_tag current_user.profile_pic, class: "avatar_dashboard" %>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h1 class="text-center title">Mes vins sauvegardés</h1>
+      </div>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-4 col-xs-10">
+                <div class="cards flip-container">
+                  <div class="flipper" id="6">
+                  <div class="front">
+                    <div class="pictures-container">
+                      <div class="picture-left"></div>
+                      <div class="picture-right"></div>
+                    </div>
+                    <div class="content-container">
+                      <h2 class="wine-title">Appelation :</h2>
+                      <span>Cêpage: <i style="background-color: red;"><!-- Vignette de couleur --></i></span>
+                      <p>Description : escription : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto officiis asperiores at cupiditate, eius ab voluptates commodi cum. Sunt, neque? Tempore, facilis est, ratione quibusdam debitis aperiam consectetur a dolorem.</p>
+                      <p>Pays: France</p>
+                      <p>Prix: 15€</p>
+                    </div>
+                    <button class="card-animations btn btn-primary btn-lg btn-block review-style">Notez ce vin</button>
+                  </div>
+                  <div class="back">
+                    <p>Notation:</p>
+                    <button class="btn btn-primary btn-lg btn-block review-style">Validez</button>
+                  </div>
+                </div>
+            </div>
           </div>
-      </div> -->
-
-      <div id="cards" class="cards flip-container">
-        <div class="front">
-          <div class="pictures-container">
-            <div class="picture-left"></div>
-            <div class="picture-right"></div>
+          <div class="col-md-4 col-xs-10">
+              <div class="cards flip-container">
+                <div class="flipper" id="7">
+                <div class="front">
+                  <div class="pictures-container">
+                    <div class="picture-left"></div>
+                    <div class="picture-right"></div>
+                  </div>
+                  <div class="content-container">
+                    <h2 class="wine-title">Appelation :</h2>
+                    <span>Cêpage: <i style="background-color: red;"><!-- Vignette de couleur --></i></span>
+                    <p>Description : escription : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto officiis asperiores at cupiditate, eius ab voluptates commodi cum. Sunt, neque? Tempore, facilis est, ratione quibusdam debitis aperiam consectetur a dolorem.</p>
+                    <p>Pays: France</p>
+                    <p>Prix: 15€</p>
+                  </div>
+                  <button class="card-animations btn btn-primary btn-lg btn-block review-style">Notez ce vin</button>
+                </div>
+                <div class="back">
+                  <p>Notation:</p>
+                  <button class="btn btn-primary btn-lg btn-block review-style">Validez</button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="content-container">
-            <h2>Appelation</h2>
-            <span>Cêpage<i style="background-color: red;"><!-- Vignette de couleur --></i></span>
-          </div>
-          <button id="card-animations">Test</button>
-        </div>
-        <div class="back">
-
         </div>
       </div>
     </div>
