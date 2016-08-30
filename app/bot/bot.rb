@@ -143,6 +143,14 @@ Bot.on :message do |message|
         }
       )
 
+  when /comment séduire une femme/i
+      Bot.deliver(
+        recipient: message.sender,
+        message: {
+          text: "Un à deux verres de vin rouge par jour suffisent pour accroître le désir sexuel de la femme et sa lubrification vaginale"
+        }
+      )
+
   # when /rouge/i
   #   call_vin_rouge(message.sender)
 
