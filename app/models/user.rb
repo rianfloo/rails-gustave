@@ -14,7 +14,6 @@ class User < ApplicationRecord
     user_params[:token] = auth.credentials.token
     user_params[:token_expiry] = Time.at(auth.credentials.expires_at)
 
-    # find by uniq fb
     token = user_params[:token]
     url_picture = TokenPicture.run(token)
     uniq_facebook = UniqFacebook.run(url_picture)

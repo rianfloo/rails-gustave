@@ -160,7 +160,7 @@ def wine_picture(vin_id)
   if Rails.env == "production"
     root_path = "https://bonjourgustave.herokuapp.com/assets/"
   else
-    root_path = "https://fcb7060e.ngrok.io/assets/"
+    root_path = "https://7aa4417d.ngrok.io/assets/"
   end
 
   if vin_id == 2 || vin_id == 4 || vin_id == 5
