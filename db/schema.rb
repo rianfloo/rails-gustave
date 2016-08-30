@@ -69,14 +69,14 @@ ActiveRecord::Schema.define(version: 20160826122452) do
   end
 
   create_table "wines", force: :cascade do |t|
-    t.integer  "millesime"
-    t.string   "color"
-    t.string   "region"
-    t.string   "appelation"
-    t.string   "grape"
-    t.integer  "price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "nom_vin"
+    t.string   "type_vin"
+    t.integer  "id_type_vin"
+    t.string   "wine_color"
+    t.string   "nom_region"
+    t.string   "nom_pays"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   add_foreign_key "meals", "dishes", column: "dishe_id"
