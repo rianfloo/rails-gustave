@@ -17,7 +17,12 @@ function openMessenger() {
   }, 1000);
 };
 
-var myEl = document.getElementById('card-animations');
-myEl.addEventListener('click', function() {
-  $('#cards').addClass('flipper');
-}, false);
+$('document').ready(function() {
+  $('.card-animations').click(function() {
+    var cardId = $(this).closest(".flipper").attr("id");
+    console.log($(cardId));
+    $('#' + cardId).toggleClass('flipped');
+    $('#' + cardId).closest('.cards').toggleClass('flipable');
+  });
+});
+
