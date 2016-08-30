@@ -34,19 +34,15 @@ class User < ApplicationRecord
   end
 
   def self.find_or_create_by_messenger_id(messenger_id)
-    # aller chercher le uniq fb
     messenger_hash = GetMessengerId.run(messenger_id)
     uniq_facebook = UniqFacebook.run(messenger_hash["profile_pic"])
-    # chercher si il existe dans la base,
     user = User.where(uniq_facebook: uniq_facebook).take
 
     user_params = GetMessengerId.run(messenger_id)
     user_params[:email] = "#{user_params['first_name'].parameterize}.#{user_params['last_name'].parameterize}#{rand(999)}@gustave.wine"
     if user
-      # update les infos
       user.update(user_params)
     else
-      # si il existe pas, le créer
       User.create(user_params)
     end
     user
