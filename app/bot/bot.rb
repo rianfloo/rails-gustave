@@ -204,7 +204,7 @@ def call_vin(sender, dish, wine_type = 0)
           {
             type: "postback",
             title: "Sauvegarder ce vin",
-            payload: "USER_DEFINED_PAYLOAD"
+            payload: "SAVE_WINE##{vin.to_json}##{dish}"
           }
         ]
       }
@@ -246,113 +246,6 @@ def call_vin(sender, dish, wine_type = 0)
   end
 end
 
-# def call_vin_filter(sender, dish)
-#   Bot.deliver(
-#       recipient: sender,
-#       message: {
-#         text: "Et voici du rouge! 🍷🍷🍷🍷🍷🍷 "
-#       }
-#     )
-#   Bot.deliver(
-#     recipient: sender,
-#     message: {
-#       attachment: {
-#         type: "template",
-#         payload: {
-#           template_type: 'generic',
-#           elements: [
-#             {
-#               title: "Vin du jour coucou",
-#               image_url: "http://lesgourmands2-0.com/wp-content/uploads/2014/06/game-of-thrones-vin-2.jpg",
-#               subtitle: "Un petit vin de producteur",
-#                buttons:[
-#                 {
-#                   type: "web_url",
-#                   url: "https://www.perdu.com",
-#                   title: "Plus d'informations"
-#                 },
-#                 {
-#                   type: "postback",
-#                   title: "Sauvegarder ce vin",
-#                   payload: "USER_DEFINED_PAYLOAD"
-#                 }
-#               ]
-#             },
-#             {
-#               title: "Vin du jour coucou",
-#               image_url: "http://lesgourmands2-0.com/wp-content/uploads/2014/06/game-of-thrones-vin-2.jpg",
-#               subtitle: "Un petit vin de producteur",
-#                buttons:[
-#                 {
-#                   type: "web_url",
-#                   url: "https://www.perdu.com",
-#                   title: "Plus d'informations"
-#                 },
-#                 {
-#                   type: "postback",
-#                   title: "Sauvegarder ce vin",
-#                   payload: "USER_DEFINED_PAYLOAD"
-#                 }
-#               ]
-#             },
-#             {
-#               title: "Vin du jour coucou",
-#               image_url: "http://lesgourmands2-0.com/wp-content/uploads/2014/06/game-of-thrones-vin-2.jpg",
-#               subtitle: "Un petit vin de producteur",
-#                buttons:[
-#                 {
-#                   type: "web_url",
-#                   url: "https://www.perdu.com",
-#                   title: "Plus d'informations"
-#                 },
-#                 {
-#                   type: "postback",
-#                   title: "Sauvegarder ce vin",
-#                   payload: "USER_DEFINED_PAYLOAD"
-#                 }
-#               ]
-#             },
-#             {
-#               title: "Vin du jour coucou",
-#               image_url: "http://lesgourmands2-0.com/wp-content/uploads/2014/06/game-of-thrones-vin-2.jpg",
-#               subtitle: "Un petit vin de producteur",
-#                buttons:[
-#                 {
-#                   type: "web_url",
-#                   url: "https://www.perdu.com",
-#                   title: "Plus d'informations"
-#                 },
-#                 {
-#                   type: "postback",
-#                   title: "Sauvegarder ce vin",
-#                   payload: "USER_DEFINED_PAYLOAD"
-#                 }
-#               ]
-#             },
-#             {
-#               title: "Vin du jour coucou",
-#               image_url: "http://lesgourmands2-0.com/wp-content/uploads/2014/06/game-of-thrones-vin-2.jpg",
-#               subtitle: "Un petit vin de producteur",
-#                buttons:[
-#                 {
-#                   type: "web_url",
-#                   url: "https://www.perdu.com",
-#                   title: "Plus d'informations"
-#                 },
-#                 {
-#                   type: "postback",
-#                   title: "Sauvegarder ce vin",
-#                   payload: "USER_DEFINED_PAYLOAD"
-#                 }
-#               ]
-#             }
-#           ]
-#         }
-#       }
-#     }
-#   )
-# end
-
 Bot.on :postback do |postback|
 
   @user = User.find_or_create_by_messenger_id(postback.sender["id"])
@@ -370,6 +263,10 @@ Bot.on :postback do |postback|
     text = "J'ai bien reçu le callback de la cave"
   when 'FILTER'
     kind_of_wine(postback.sender)
+  when /SAVE_WINE/i
+    payload_data = postback.payload.match(/SAVE_WINE#(.*)#(.*)/)
+    wine = JSON.parse(payload_data[1])
+    dish = payload_data[2]
   end
 
 end
