@@ -264,11 +264,9 @@ Bot.on :postback do |postback|
   when 'FILTER'
     kind_of_wine(postback.sender)
   when /SAVE_WINE/i
-    byebug
     payload_data = postback.payload.match(/SAVE_WINE#(.*)#(.*)/)
     wine = JSON.parse(payload_data[1])
     dish = payload_data[2]
-    byebug
   end
 
 end
