@@ -24,11 +24,11 @@ ActiveRecord::Schema.define(version: 20160826122452) do
 
   create_table "meals", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "dishe_id"
+    t.integer  "dish_id"
     t.integer  "wine_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["dishe_id"], name: "index_meals_on_dishe_id", using: :btree
+    t.index ["dish_id"], name: "index_meals_on_dish_id", using: :btree
     t.index ["user_id"], name: "index_meals_on_user_id", using: :btree
     t.index ["wine_id"], name: "index_meals_on_wine_id", using: :btree
   end
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 20160826122452) do
     t.datetime "updated_at",  null: false
   end
 
-  add_foreign_key "meals", "dishes", column: "dishe_id"
+  add_foreign_key "meals", "dishes"
   add_foreign_key "meals", "users"
   add_foreign_key "meals", "wines"
   add_foreign_key "steps", "users"

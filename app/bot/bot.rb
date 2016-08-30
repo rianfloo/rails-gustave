@@ -168,7 +168,7 @@ def wine_picture(vin_id)
   if Rails.env == "production"
     root_path = "https://bonjourgustave.herokuapp.com/assets/"
   else
-    root_path = "https://7aa4417d.ngrok.io/assets/"
+    root_path = "https://923da36c.ngrok.io/assets/"
   end
 
   if vin_id == 2 || vin_id == 4 || vin_id == 5
@@ -180,6 +180,14 @@ def wine_picture(vin_id)
   end
 end
 
+def save_meal(sender, vin)
+  Bot.deliver(
+        recipient: sender,
+        message: {
+          text: "J'ai sauvegardé votre #{vin["nom_vin"]} dans votre cave personnelle."
+        }
+      )
+end
 
 def call_vin(sender, dish, wine_type = 0)
   if Gustave.run({ dish: dish, wine_type: wine_type }).blank?
@@ -273,8 +281,13 @@ Bot.on :postback do |postback|
     kind_of_wine(postback.sender)
   when /SAVE_WINE/i
     payload_data = postback.payload.match(/SAVE_WINE#(.*)#(.*)/)
-    wine = JSON.parse(payload_data[1])
-    dish = payload_data[2]
+    wine_data = JSON.parse(payload_data[1])
+    dish_name = payload_data[2]
+    the_dish = Dish.find_or_create_by(name: dish_name)
+    the_wine = Wine.find_or_create_by(wine_data)
+
+    @user.meals.create(dish: the_dish, wine: the_wine)
+    save_meal(postback.sender, the_wine)
   end
 
 end
