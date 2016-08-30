@@ -27,7 +27,9 @@
       </div>
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-4 col-xs-10">
+
+          <% current_user.meals.each do |meal| %>
+            <div class="col-md-4 col-xs-10 test">
                 <div class="cards flip-container">
                   <div class="flipper" id="6">
                   <div class="front">
@@ -36,8 +38,8 @@
                       <div class="picture-right"></div>
                     </div>
                     <div class="content-container">
-                      <h2 class="wine-title">Appelation :</h2>
-                      <span>Cêpage: <i style="background-color: red;"><!-- Vignette de couleur --></i></span>
+                      <h2 class="wine-title"><%= meal.wine.nom_vin %> </h2>
+                      <span>Région: <%= meal.wine.nom_region %><i style="background-color: red;"><!-- Vignette de couleur --></i></span>
                       <p>Description : escription : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto officiis asperiores at cupiditate, eius ab voluptates commodi cum. Sunt, neque? Tempore, facilis est, ratione quibusdam debitis aperiam consectetur a dolorem.</p>
                       <p>Pays: France</p>
                       <p>Prix: 15€</p>
@@ -51,6 +53,8 @@
                 </div>
             </div>
           </div>
+          <% end %>
+
           <div class="col-md-4 col-xs-10">
               <div class="cards flip-container">
                 <div class="flipper" id="7">
