@@ -1,0 +1,56 @@
+<div class="col-md-4 col-xs-10 test">
+  <div class="cards flip-container">
+    <div class="flipper" id=<%= meal.id %>>
+      <div class="front">
+        <div class="pictures-container">
+          <div class="picture-left"></div>
+          <div class="picture-right"></div>
+        </div>
+        <div class="content-container">
+          <h2 class="wine-title"><%= meal.wine.nom_vin %></h2>
+          <p>Repas associé <%= meal.dish.name.capitalize %></p>
+          <span>
+            Région: <%= meal.wine.nom_region %>
+            <i style="background-color: red;"><!-- Vignette de couleur --></i>
+          </span>
+          <p>
+            Description : escription : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto officiis asperiores at cupiditate, eius ab voluptates commodi cum. Sunt, neque? Tempore, facilis est, ratione quibusdam debitis aperiam consectetur a dolorem.
+          </p>
+          <p>Pays: France</p>
+          <p>Prix: 15€</p>
+        </div>
+          <% if meal.rating.nil? %>
+            <button class="card-animations btn btn-primary btn-lg btn-block review-style">  Notez cette association
+            </button>
+          <% else %>
+            <p class="btn btn-primary btn-lg btn-block voted">Vous avez noté cette association à <%= meal.rating %> sur 5 </p>
+          <% end %>
+      </div>
+      <div class="back">
+        <p class="review-intro-sentence">
+          Dites-nous si vous avez apprécié le <%= meal.wine.nom_vin %> avec votre <%= meal.dish.name%>.
+        </p>
+        <p class="review-title">Notation :</p>
+        <%= form_for meal, :url => meal_path(meal), method: :patch, class: "rating"  do |f| %>
+          <fieldset>
+            <span class="star-cb-group">
+              <input type="radio" id="<%= meal.id%>-rating-5" name="rating" value="5" />
+              <label for="<%= meal.id%>-rating-5">5</label>
+              <input type="radio" id="<%= meal.id%>-rating-4" name="rating" value="4" />
+              <label for="<%= meal.id%>-rating-4">4</label>
+              <input type="radio" id="<%= meal.id%>-rating-3" name="rating" value="3" />
+              <label for="<%= meal.id%>-rating-3">3</label>
+              <input type="radio" id="<%= meal.id%>-rating-2" name="rating" value="2" />
+              <label for="<%= meal.id%>-rating-2">2</label>
+              <input type="radio" id="<%= meal.id%>-rating-1" name="rating" value="1" />
+              <label for="<%= meal.id%>-rating-1">1</label>
+              <input type="radio" id="<%= meal.id%>-rating-0" name="rating" value="0" class="star-cb-clear" />
+              <label for="<%= meal.id%>-rating-0">0</label>
+            </span>
+          </fieldset>
+          <%= f.submit "Valider notation", class: "btn btn-primary btn-lg btn-block review-style" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
