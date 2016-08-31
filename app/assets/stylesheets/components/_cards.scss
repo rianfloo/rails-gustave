@@ -161,6 +161,11 @@
   font-size: 15px;
 }
 
+.review-style:active {
+    background-color: #EE7785;
+    border-color: #EE7785;
+  }
+
 .review-style:hover {
     background-color: #EE7785;
     border-color: #EE7785;
@@ -197,6 +202,8 @@
   border-color: #8CD790;
   font-family: 'Jaldi';
   font-size: 15px;
+  pointer-events: none;
+  cursor: default;
 }
 
 .voted:hover {
@@ -204,5 +211,9 @@
   border-color: #8CD790;
   font-family: 'Jaldi';
   cursor:  pointer;
+}
+
+.star {
+  width: 30px;
 }
 

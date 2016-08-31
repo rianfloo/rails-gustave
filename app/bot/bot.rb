@@ -135,14 +135,6 @@ Bot.on :message do |message|
       }
     )
 
-  when /non/i
-      Bot.deliver(
-        recipient: message.sender,
-        message: {
-          text: "Très bien, je te laisse regarder les vins ! :)"
-        }
-      )
-
   when /comment séduire une femme/i
       Bot.deliver(
         recipient: message.sender,
@@ -150,9 +142,6 @@ Bot.on :message do |message|
           text: "Un à deux verres de vin rouge par jour suffisent pour accroître le désir sexuel de la femme et sa lubrification vaginale"
         }
       )
-
-  # when /rouge/i
-  #   call_vin_rouge(message.sender)
 
   when /vin/i
     Bot.deliver(
@@ -168,7 +157,7 @@ def wine_picture(vin_id)
   if Rails.env == "production"
     root_path = "https://bonjourgustave.herokuapp.com/assets/"
   else
-    root_path = "https://923da36c.ngrok.io/assets/"
+    root_path = "https://3a215ac4.ngrok.io/assets/"
   end
 
   if vin_id == 2 || vin_id == 4 || vin_id == 5
@@ -187,6 +176,12 @@ def save_meal(sender, vin)
           text: "J'ai sauvegardé votre #{vin["nom_vin"]} dans votre cave personnelle."
         }
       )
+  Bot.deliver(
+        recipient: sender,
+        message: {
+          text: "Retrouve ta cave personnelle sur http://wwww.bonjourgustave.co"
+        }
+      )
 end
 
 def call_vin(sender, dish, wine_type = 0)
@@ -196,6 +191,25 @@ def call_vin(sender, dish, wine_type = 0)
     recipient: sender,
     message: {
       text: "Aucun accord de vin trouvé"
+    }
+  )
+
+    Bot.deliver(
+    recipient: sender,
+    message: {
+      attachment: {
+      type: 'image',
+      payload: {
+        url: 'http://www.quentintarantinofanclub.com/gif/confused_vincent_vega.gif'
+      }
+      }
+    }
+  )
+
+    Bot.deliver(
+    recipient: sender,
+    message: {
+      text: "Ecris un autre plat"
     }
   )
   else
