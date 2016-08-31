@@ -157,11 +157,7 @@ def wine_picture(vin_id)
   if Rails.env == "production"
     root_path = "https://bonjourgustave.herokuapp.com/assets/"
   else
-<<<<<<< HEAD
     root_path = "https://69d4fecf.ngrok.io/assets/"
-=======
-    root_path = "https://3a215ac4.ngrok.io/assets/"
->>>>>>> 4a6e0185fd2a9c7cc1e432adf0f6ff5f80582edc
   end
 
   if vin_id == 2 || vin_id == 4 || vin_id == 5
@@ -186,6 +182,21 @@ def save_meal(sender, vin)
           text: "Retrouve ta cave personnelle sur http://wwww.bonjourgustave.co"
         }
       )
+end
+
+def about_wine(sender, wine_array)
+  Bot.deliver(
+        recipient: sender,
+        message: {
+          text: "#{wine_array[0]}. #{wine_array[1]}."
+        }
+      )
+  # Bot.deliver(
+  #       recipient: sender,
+  #       message: {
+  #         text: "#{wine_array[5]}."
+  #       }
+  #     )
 end
 
 def call_vin(sender, dish, wine_type = 0)
@@ -231,9 +242,9 @@ def call_vin(sender, dish, wine_type = 0)
         subtitle: "Un vin #{vin["type_vin"]} de la region #{vin["nom_region"]}",
          buttons:[
           {
-            type: "web_url",
-            url: "https://www.perdu.com",
-            title: "Plus d'informations"
+            type: "postback",
+            title: "Plus d'informations",
+            payload: "ABOUT_WINE##{vin.to_json}"
           },
           {
             type: "postback",
@@ -306,6 +317,11 @@ Bot.on :postback do |postback|
 
     @user.meals.create(dish: the_dish, wine: the_wine)
     save_meal(postback.sender, the_wine)
+  when /ABOUT_WINE/i
+    payload_data = postback.payload.match(/ABOUT_WINE#(.*)/)
+    wine_data = JSON.parse(payload_data[1])
+    wine_array = WineDescription.run(wine_data["nom_vin"])
+    about_wine(postback.sender, wine_array)
   end
 
 end
