@@ -165,13 +165,16 @@ body {
 
 .contact {
   position: absolute;
-  bottom: 10px;
+  bottom: 30px;
   font-size: 12px;
   font-weight: 100;
-  text-decoration: underline;
   color: #cdcdcd;
+    & a {
+      color: #cdcdcd;
+      text-decoration: underline;
 
-  &:active, &:focus, &:hover {
-    color: black;
-  }
+      &:active, &:focus, &:hover {
+        color: black;
+      }
+    }
 }
