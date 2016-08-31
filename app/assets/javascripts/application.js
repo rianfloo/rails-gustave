@@ -24,6 +24,13 @@ $('document').ready(function() {
     $('#' + cardId).toggleClass('flipped');
     $('#' + cardId).closest('.cards').toggleClass('flipable');
   });
+
+  $( ".star-cb-group > input" ).click(function() {
+    console.log("click");
+    $(".star-cb-group > input").prop("checked", false);
+    $(this).prop("checked", true);
+  });
+
 });
 
 

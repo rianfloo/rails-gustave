@@ -1,100 +1,40 @@
 <%= render 'shared/flashes' %>
 
-
-
-
 <div class="main-wrap">
-    <div class="sidebar">
-      <%= image_tag "gustave.svg", class: "gustave" %>
+  <div class="sidebar">
+    <%= image_tag "gustave.svg", class: "gustave" %>
+  </div>
+  <div class="portfolio">
+    <div class="account">
+      <ul class="list-inline">
+        <li>
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle profile-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <%= current_user.first_name %> <%= current_user.last_name %>
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <%= link_to('Se déconnecter', destroy_user_session_path, :method => :delete) %>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <%= image_tag current_user.profile_pic, class: "avatar_dashboard" %>
+        </li>
+      </ul>
     </div>
-    <div class="portfolio">
-      <div class="account">
-        <ul class="list-inline">
-          <li>
-            <div class="btn-group">
-              <button type="button" class="btn btn-default dropdown-toggle profile-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <%= current_user.first_name %> <%= current_user.last_name %> <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu">
-                <li><%= link_to('Se déconnecter', destroy_user_session_path, :method => :delete) %></a></li>
-              </ul>
-            </div>
-          </li>
-          <li>
-            <%= image_tag current_user.profile_pic, class: "avatar_dashboard" %>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <h1 class="text-center title">Mes vins sauvegardés</h1>
-      </div>
-        <div class="container-fluid">
-          <div class="row">
+    <div>
+      <h1 class="text-center title">Mes vins sauvegardés</h1>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
 
-          <% current_user.meals.each do |meal| %>
-            <div class="col-md-4 col-xs-10 test">
-                <div class="cards flip-container">
-                  <div class="flipper" id="6">
-                  <div class="front">
-                    <div class="pictures-container">
-                      <div class="picture-left"></div>
-                      <div class="picture-right"></div>
-                    </div>
-                    <div class="content-container">
-                      <h2 class="wine-title"><%= meal.wine.nom_vin %> </h2>
-                      <span>Région: <%= meal.wine.nom_region %><i style="background-color: red;"><!-- Vignette de couleur --></i></span>
-                      <p>Description : escription : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto officiis asperiores at cupiditate, eius ab voluptates commodi cum. Sunt, neque? Tempore, facilis est, ratione quibusdam debitis aperiam consectetur a dolorem.</p>
-                      <p>Pays: France</p>
-                      <p>Prix: 15€</p>
-                    </div>
-                    <button class="card-animations btn btn-primary btn-lg btn-block review-style">Notez ce vin</button>
-                  </div>
-                  <div class="back">
-                    <p>Dites-nous si vous avez apprécié le <%= meal.wine.nom_vin %> </p>
-                    <form class="tototo">
-                    <%= form_for  do |f| %>
-                      <fieldset>
-                        <span class="star-cb-group">
-                          <input type="radio" id="rating-5" name="rating" value="5" /><label for="rating-5">5</label>
-                          <input type="radio" id="rating-4" name="rating" value="4" checked="checked" /><label for="rating-4">4</label>
-                          <input type="radio" id="rating-3" name="rating" value="3" /><label for="rating-3">3</label>
-                          <input type="radio" id="rating-2" name="rating" value="2" /><label for="rating-2">2</label>
-                          <input type="radio" id="rating-1" name="rating" value="1" /><label for="rating-1">1</label>
-                          <input type="radio" id="rating-0" name="rating" value="0" class="star-cb-clear" /><label for="rating-0">0</label>
-                        </span>
-                      </fieldset>
-                    </form>
-                  </div>
-                </div>
-            </div>
-          </div>
-          <% end %>
-
-          <div class="col-md-4 col-xs-10">
-              <div class="cards flip-container">
-                <div class="flipper" id="7">
-                <div class="front">
-                  <div class="pictures-container">
-                    <div class="picture-left"></div>
-                    <div class="picture-right"></div>
-                  </div>
-                  <div class="content-container">
-                    <h2 class="wine-title">Appelation :</h2>
-                    <span>Cêpage: <i style="background-color: red;"><!-- Vignette de couleur --></i></span>
-                    <p>Description : escription : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto officiis asperiores at cupiditate, eius ab voluptates commodi cum. Sunt, neque? Tempore, facilis est, ratione quibusdam debitis aperiam consectetur a dolorem.</p>
-                    <p>Pays: France</p>
-                    <p>Prix: 15€</p>
-                  </div>
-                  <button class="card-animations btn btn-primary btn-lg btn-block review-style">Notez ce vin</button>
-                </div>
-                <div class="back">
-                  <p>Notation:</p>
-                  <button class="btn btn-primary btn-lg btn-block review-style">Validez</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <% current_user.meals.each do |meal| %>
+         <%= render 'meals/card', meal: meal %>
+        <% end %>
       </div>
     </div>
+  </div>
 </div>
