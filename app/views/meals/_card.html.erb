@@ -8,22 +8,29 @@
         </div>
         <div class="content-container">
           <h2 class="wine-title"><%= meal.wine.nom_vin %></h2>
-          <p>Repas associé <%= meal.dish.name.capitalize %></p>
+          <p>Repas associé : <%= meal.dish.name.capitalize %></p>
           <span>
-            Région: <%= meal.wine.nom_region %>
+            <p>Région : <%= meal.wine.nom_region %></p>
             <i style="background-color: red;"><!-- Vignette de couleur --></i>
           </span>
           <p>
             Description : escription : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto officiis asperiores at cupiditate, eius ab voluptates commodi cum. Sunt, neque? Tempore, facilis est, ratione quibusdam debitis aperiam consectetur a dolorem.
           </p>
-          <p>Pays: France</p>
-          <p>Prix: 15€</p>
+          <p>Pays : France</p>
+          <p>Prix : 15€</p>
         </div>
           <% if meal.rating.nil? %>
             <button class="card-animations btn btn-primary btn-lg btn-block review-style">  Notez cette association
             </button>
           <% else %>
-            <p class="btn btn-primary btn-lg btn-block voted">Vous avez noté cette association à <%= meal.rating %> sur 5 </p>
+            <p class="btn btn-primary btn-lg btn-block voted">
+              <% meal.rating.times do %>
+                <i class="fa fa-star" aria-hidden="true"></i>
+              <% end %>
+              <% (5 - meal.rating).times do %>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+              <% end %>
+            </p>
           <% end %>
       </div>
       <div class="back">

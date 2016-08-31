@@ -143,9 +143,6 @@ Bot.on :message do |message|
         }
       )
 
-  # when /rouge/i
-  #   call_vin_rouge(message.sender)
-
   when /vin/i
     Bot.deliver(
       recipient: message.sender,
@@ -160,7 +157,11 @@ def wine_picture(vin_id)
   if Rails.env == "production"
     root_path = "https://bonjourgustave.herokuapp.com/assets/"
   else
+<<<<<<< HEAD
     root_path = "https://69d4fecf.ngrok.io/assets/"
+=======
+    root_path = "https://3a215ac4.ngrok.io/assets/"
+>>>>>>> 4a6e0185fd2a9c7cc1e432adf0f6ff5f80582edc
   end
 
   if vin_id == 2 || vin_id == 4 || vin_id == 5
@@ -179,6 +180,12 @@ def save_meal(sender, vin)
           text: "J'ai sauvegardé votre #{vin["nom_vin"]} dans votre cave personnelle."
         }
       )
+  Bot.deliver(
+        recipient: sender,
+        message: {
+          text: "Retrouve ta cave personnelle sur http://wwww.bonjourgustave.co"
+        }
+      )
 end
 
 def call_vin(sender, dish, wine_type = 0)
@@ -188,6 +195,25 @@ def call_vin(sender, dish, wine_type = 0)
     recipient: sender,
     message: {
       text: "Aucun accord de vin trouvé"
+    }
+  )
+
+    Bot.deliver(
+    recipient: sender,
+    message: {
+      attachment: {
+      type: 'image',
+      payload: {
+        url: 'http://www.quentintarantinofanclub.com/gif/confused_vincent_vega.gif'
+      }
+      }
+    }
+  )
+
+    Bot.deliver(
+    recipient: sender,
+    message: {
+      text: "Ecris un autre plat"
     }
   )
   else
