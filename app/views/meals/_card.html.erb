@@ -34,10 +34,10 @@
           <% end %>
       </div>
       <div class="back">
+        <p class="review-title">Votre avis</p>
         <p class="review-intro-sentence">
           Dites-nous si vous avez apprécié le <%= meal.wine.nom_vin %> avec votre <%= meal.dish.name%>.
         </p>
-        <p class="review-title">Notation :</p>
         <%= form_for meal, :url => meal_path(meal), method: :patch, class: "rating"  do |f| %>
           <fieldset>
             <span class="star-cb-group">
