@@ -191,12 +191,12 @@ def about_wine(sender, wine_array)
           text: "#{wine_array[0]}. #{wine_array[1]}."
         }
       )
-  # Bot.deliver(
-  #       recipient: sender,
-  #       message: {
-  #         text: "#{wine_array[5]}."
-  #       }
-  #     )
+  Bot.deliver(
+        recipient: sender,
+        message: {
+          text: "#{wine_array[2]}."
+        }
+      )
 end
 
 def call_vin(sender, dish, wine_type = 0)
