@@ -4,8 +4,8 @@ class Dish < ApplicationRecord
   def picture
     if photo_url.blank?
       image_google = ImageGoogle.run(name)
-      photo_url = image_google
+      self.photo_url = image_google
     end
-    photo_url
+    self.photo_url
   end
 end

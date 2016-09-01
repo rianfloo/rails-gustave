@@ -3,21 +3,24 @@
     <div class="flipper" id=<%= meal.id %>>
       <div class="front">
         <div class="pictures-container">
-          <div class="picture-left"></div>
-          <div class="picture-right"></div>
+          <div class="picture-left" style="background-image: url('<%= image_url(meal.wine.picture) %>')">
+
+          </div>
+          <div class="picture-right"  style="background-image: url('<%= meal.dish.picture %>')"></div>
         </div>
         <div class="content-container">
           <h2 class="wine-title"><%= meal.wine.nom_vin %></h2>
-          <p>Repas associé : <%= meal.dish.name.capitalize %></p>
+          <p> <h5><i class="fa fa-cutlery" aria-hidden="true"></i> <%= meal.dish.name.upcase %></h5></p>
           <span>
-            <p>Région : <%= meal.wine.nom_region %></p>
-            <i style="background-color: red;"><!-- Vignette de couleur --></i>
+            <p><strong>Région :</strong> <%= meal.wine.nom_region %></p>
+            <i style="background-color: red;"></i>
           </span>
           <p>
-            Description : escription : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto officiis asperiores at cupiditate, eius ab voluptates commodi cum. Sunt, neque? Tempore, facilis est, ratione quibusdam debitis aperiam consectetur a dolorem.
+
+            <strong>Description :</strong> <%= truncate(WineDescription.run(meal.wine.nom_vin)[0]  + WineDescription.run(meal.wine.nom_vin)[1], length: 82) %>.
           </p>
-          <p>Pays : France</p>
-          <p>Prix : 15€</p>
+          <p><strong>Pays :</strong> France</p>
+          <p><strong>Prix :</strong> <% rand(1..3).times do %> <i class="fa fa-eur" aria-hidden="true"></i><% end %></p>
         </div>
           <% if meal.rating.nil? %>
             <button class="card-animations btn btn-primary btn-lg btn-block review-style">  Notez cette association

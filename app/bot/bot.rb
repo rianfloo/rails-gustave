@@ -166,16 +166,23 @@ end
 def save_meal(sender, vin)
   Bot.deliver(
         recipient: sender,
-        message: {
-          text: "J'ai sauvegardé votre #{vin["nom_vin"]} dans votre cave personnelle."
-        }
-      )
-  Bot.deliver(
-        recipient: sender,
-        message: {
-          text: "Retrouve ta cave personnelle sur http://wwww.bonjourgustave.co"
-        }
-      )
+        message:{
+          attachment:{
+            type:"template",
+            payload:{
+              template_type: "button",
+              text: "J'ai sauvegardé votre #{vin["nom_vin"]} dans votre cave personnelle !  Retrouver votre cave personnelle :",
+              buttons:[
+                {
+                  type: "web_url",
+                  url: "http://bonjourgustave.co/",
+                  title: "Voir la cave"
+                }
+              ]
+            }
+          }
+  }
+  )
 end
 
 def about_wine(sender, wine_array)

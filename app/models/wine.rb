@@ -13,4 +13,15 @@ class Wine < ApplicationRecord
       self.wine_color = "#E4D5A3"
     end
   end
+
+  def picture
+    case self.id_type_vin
+    when 1, 7                       # Rouge
+      "b1.png"
+    when 2, 4, 5                    # Blanc
+      "b2.png"
+    when 3, 6                       # Rosé
+      "b3.png"
+    end
+  end
 end
