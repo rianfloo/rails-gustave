@@ -97,6 +97,8 @@ Bot.on :message do |message|
       @dish = message.text
       last_step.update(response: message.text)
       call_vin(message.sender, last_step[:response])
+      # FINIR LA STEP
+
     when "filtredcolor"
       last_step.update(response: message.text)
       call_vin(message.sender, @dish, wine_id(last_step[:response]))
