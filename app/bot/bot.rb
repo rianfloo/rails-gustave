@@ -106,7 +106,7 @@ Bot.on :message do |message|
 
   case message.text
 
-  when /bonjour/i
+  when /bonjour/i, /hello/i, /bonsoir/i, /salut/i, /hey/i, /coucou/i, /dit/i, /yo/i
     Bot.deliver(
         recipient: message.sender,
         message: {
@@ -122,18 +122,18 @@ Bot.on :message do |message|
     Bot.deliver(
       recipient: message.sender,
       message: {
-        text: "Bonjour très cher ! Je m'appelle Gustave. Je suis ton sommelier virtuel. Je peux te suggérer une bonne bouteille de vin ou un repas avec ton vin si tu l'as déjà. ;-)"
+        text: "Bonjour #{GetMessengerId.run(message.sender["id"])["first_name"]}! Je m'appelle Gustave. Je suis ton sommelier virtuel. Je peux te suggérer une bonne bouteille de vin ou un repas avec ton vin si tu l'as déjà. ;-)"
       }
     )
     menu(message.sender)
 
-  when /hello/i
-    Bot.deliver(
-      recipient: message.sender,
-      message: {
-        text: "Bonjour très cher ! Je m'appelle Gustave. Je suis ton sommelier virtuel. Je peux te suggérer une bonne bouteille de vin ou un repas avec ton vin si tu l'as déjà. ;-)"
-      }
-    )
+  when /non/i
+      Bot.deliver(
+        recipient: message.sender,
+        message: {
+          text: "Très bien, je te laisse regarder les vins ! :)"
+        }
+      )
 
   when /comment séduire une femme/i
       Bot.deliver(
@@ -157,7 +157,7 @@ def wine_picture(vin_id)
   if Rails.env == "production"
     root_path = "https://bonjourgustave.herokuapp.com/assets/"
   else
-    root_path = "https://3a215ac4.ngrok.io/assets/"
+    root_path = "https://69d4fecf.ngrok.io/assets/"
   end
 
   if vin_id == 2 || vin_id == 4 || vin_id == 5
@@ -180,6 +180,21 @@ def save_meal(sender, vin)
         recipient: sender,
         message: {
           text: "Retrouve ta cave personnelle sur http://wwww.bonjourgustave.co"
+        }
+      )
+end
+
+def about_wine(sender, wine_array)
+  Bot.deliver(
+        recipient: sender,
+        message: {
+          text: "#{wine_array[0]}. #{wine_array[1]}."
+        }
+      )
+  Bot.deliver(
+        recipient: sender,
+        message: {
+          text: "#{wine_array[2]}."
         }
       )
 end
@@ -227,9 +242,9 @@ def call_vin(sender, dish, wine_type = 0)
         subtitle: "Un vin #{vin["type_vin"]} de la region #{vin["nom_region"]}",
          buttons:[
           {
-            type: "web_url",
-            url: "https://www.perdu.com",
-            title: "Plus d'informations"
+            type: "postback",
+            title: "Plus d'informations",
+            payload: "ABOUT_WINE##{vin.to_json}"
           },
           {
             type: "postback",
@@ -302,6 +317,11 @@ Bot.on :postback do |postback|
 
     @user.meals.create(dish: the_dish, wine: the_wine)
     save_meal(postback.sender, the_wine)
+  when /ABOUT_WINE/i
+    payload_data = postback.payload.match(/ABOUT_WINE#(.*)/)
+    wine_data = JSON.parse(payload_data[1])
+    wine_array = WineDescription.run(wine_data["nom_vin"])
+    about_wine(postback.sender, wine_array)
   end
 
 end
