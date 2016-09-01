@@ -21,5 +21,8 @@ module RailsGustave
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+    # Auto-load bots and its subdirectories
+    config.paths.add File.join('app', 'bots'), glob: File.join('**', '*.rb')
+    config.autoload_paths += Dir[Rails.root.join('app', 'bots', '*')]
   end
 end
