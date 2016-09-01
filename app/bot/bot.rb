@@ -149,7 +149,7 @@ end
 
 def wine_picture(vin_id)
   if Rails.env == "production"
-    root_path = "https://bonjourgustave.herokuapp.com/assets/"
+    root_path = "https://bonjourgustave.herokuapp.com/"
   else
     root_path = "https://498b468a.ngrok.io/assets/"
   end
