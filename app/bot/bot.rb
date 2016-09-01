@@ -109,7 +109,7 @@ Bot.on :message do |message|
 
   case message.text
 
-  when /bonjour/i, /hello/i, /bonsoir/i, /salut/i, /hey/i, /coucou/i, /dit/i, /yo/i
+  when /bonjour/i, /hello/i, /bonsoir/i, /salut/i, /hey/i, /coucou/i, /dit/i, /yo/i, /🍷/i, /gustave/i
     Bot.deliver(
         recipient: message.sender,
         message: {
@@ -119,15 +119,6 @@ Bot.on :message do |message|
       menu(message.sender)
 
   when /menu/i
-    menu(message.sender)
-
-  when /🍷/i
-    Bot.deliver(
-      recipient: message.sender,
-      message: {
-        text: "Bonjour #{GetMessengerId.run(message.sender["id"])["first_name"]}! Je m'appelle Gustave. Je suis ton sommelier virtuel. Je peux te suggérer une bonne bouteille de vin ou un repas avec ton vin si tu l'as déjà. ;-)"
-      }
-    )
     menu(message.sender)
 
   when /non/i
@@ -160,7 +151,7 @@ def wine_picture(vin_id)
   if Rails.env == "production"
     root_path = "https://bonjourgustave.herokuapp.com/assets/"
   else
-    root_path = "https://69d4fecf.ngrok.io/assets/"
+    root_path = "https://498b468a.ngrok.io/assets/"
   end
 
   if vin_id == 2 || vin_id == 4 || vin_id == 5
@@ -191,9 +182,17 @@ def about_wine(sender, wine_array)
   Bot.deliver(
         recipient: sender,
         message: {
-          text: "#{wine_array[0]}. #{wine_array[1]}."
+          text: "#{wine_array[0]}."
         }
       )
+
+  Bot.deliver(
+        recipient: sender,
+        message: {
+          text: "#{wine_array[1]}."
+        }
+      )
+
   Bot.deliver(
         recipient: sender,
         message: {
