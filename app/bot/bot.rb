@@ -156,9 +156,9 @@ def wine_picture(vin_id)
 
   if vin_id == 2 || vin_id == 4 || vin_id == 5
     root_path + "c2.png"
-  elsif vin_id == 1 || vin_id == 7
+  elsif vin_id == 1 || vin_id == 7
     root_path + "c1.png"
-  elsif vin_id == 3 || vin_id == 6
+  elsif vin_id == 3 || vin_id == 6
     root_path + "c3.png"
   end
 end
