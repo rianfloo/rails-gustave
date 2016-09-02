@@ -16,7 +16,8 @@ class Gustave < ServiceBase
       wine_type = @request[:wine_type]
       api_url = "http://www.platsnetvins.com/api-xml/j-goillot-n9mvld5bp-accords-plat-xml.php?nomplat=#{dish}&ftypevin=#{wine_type}"
       begin
-        response_xml = RestClient.get api_url #, {:params => {:id => 50, 'foo' => 'bar'}}
+        # response_xml = RestClient.get api_url #, {:params => {:id => 50, 'foo' => 'bar'}}
+        response_xml = RestClient::Request.execute(method: :get, url: api_url, proxy: "http://108.59.10.129:55555")
         parsing_xml_from_ingredient(response_xml)
       rescue
         {}
