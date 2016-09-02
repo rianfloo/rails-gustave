@@ -129,6 +129,21 @@ Bot.on :message do |message|
         }
       )
 
+  when /la suite/i
+   Bot.deliver(
+     recipient: message.sender,
+     message: {
+       text: "Bientôt je connaitrais tous les vins de la terre ! 🌍🌍"
+     }
+   )
+
+   Bot.deliver(
+     recipient: message.sender,
+     message: {
+       text: "Je serais même en mesure de vous livrer du vin chez vous... 😎 🚛🚛 💵💵💵💵"
+     }
+   )
+
   when /comment séduire une femme/i
       Bot.deliver(
         recipient: message.sender,
