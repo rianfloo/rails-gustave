@@ -121,14 +121,6 @@ Bot.on :message do |message|
   when /menu/i
     menu(message.sender)
 
-  when /non/i
-      Bot.deliver(
-        recipient: message.sender,
-        message: {
-          text: "Très bien, je te laisse regarder les vins ! :)"
-        }
-      )
-
   when /la suite/i
    Bot.deliver(
      recipient: message.sender,
