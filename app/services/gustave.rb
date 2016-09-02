@@ -15,6 +15,7 @@ class Gustave < ServiceBase
       dish = @request[:dish]
       wine_type = @request[:wine_type]
       api_url = "http://www.platsnetvins.com/api-xml/j-goillot-n9mvld5bp-accords-plat-xml.php?nomplat=#{dish}&ftypevin=#{wine_type}"
+      byebug
       response_xml = RestClient.get api_url #, {:params => {:id => 50, 'foo' => 'bar'}}
       parsing_xml_from_ingredient(response_xml)
         # If params
