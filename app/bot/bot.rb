@@ -216,7 +216,8 @@ def about_wine(sender, wine_array)
 end
 
 def call_vin(sender, dish, wine_type = 0)
-  if Gustave.run({ dish: dish, wine_type: wine_type }).blank?
+  wines = Gustave.run({ dish: dish, wine_type: wine_type })
+  if wines.blank?
 
     Bot.deliver(
     recipient: sender,
@@ -251,7 +252,7 @@ def call_vin(sender, dish, wine_type = 0)
       }
     )
     elements = []
-    Gustave.run({ dish: dish, wine_type: wine_type }).each do |vin|
+    wines.each do |vin|
       elements << {
         title: vin["nom_vin"],
         image_url: wine_picture(vin["id_type_vin"].to_i),

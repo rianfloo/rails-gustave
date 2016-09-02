@@ -1,6 +1,6 @@
 require 'open-uri'
 
-# You just have to call MyService.run("awesome data")
+# You just have to call Gustave.run("awesome data")
 class Gustave < ServiceBase
   attr_accessor :request
   attr_accessor :wine_type
@@ -15,8 +15,12 @@ class Gustave < ServiceBase
       dish = @request[:dish]
       wine_type = @request[:wine_type]
       api_url = "http://www.platsnetvins.com/api-xml/j-goillot-n9mvld5bp-accords-plat-xml.php?nomplat=#{dish}&ftypevin=#{wine_type}"
-      response_xml = RestClient.get api_url #, {:params => {:id => 50, 'foo' => 'bar'}}
-      parsing_xml_from_ingredient(response_xml)
+      begin
+        response_xml = RestClient.get api_url #, {:params => {:id => 50, 'foo' => 'bar'}}
+        parsing_xml_from_ingredient(response_xml)
+      rescue
+        {}
+      end
         # If params
         # api_url + params
     # elsif @request[:wine]
