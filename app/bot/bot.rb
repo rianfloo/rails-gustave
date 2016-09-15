@@ -337,7 +337,8 @@ Bot.on :postback do |postback|
   when /ABOUT_WINE/i
     payload_data = postback.payload.match(/ABOUT_WINE#(.*)/)
     wine_data = JSON.parse(payload_data[1])
-    wine_array = WineDescription.run(wine_data["nom_vin"])
+    wine_infos = " #{wine_data["nom_vin"]} #{wine_data["type_vin"]} "
+    wine_array = WineDescription.run(wine_infos)
     about_wine(postback.sender, wine_array)
   end
 
