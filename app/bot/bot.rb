@@ -238,12 +238,8 @@ def call_vin(sender, dish, wine_type = 0)
     }
   )
 
-    Bot.deliver(
-    recipient: sender,
-    message: {
-      text: "Ecris un autre plat"
-    }
-  )
+    menu(message.sender)
+
   else
     Bot.deliver(
       recipient: sender,
