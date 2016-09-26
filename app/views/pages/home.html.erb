@@ -1,37 +1,38 @@
 <div class="landing">
-  <div class='row'>
-    <div class="col-md-6 left-card">
-      <%= image_tag "phone2.png", class: "phone" %>
-    </div>
+  <div class="container-fluid">
+    <div class='row'>
+      <div class="col-md-6 left-card">
+        <%= image_tag "phone2.png", class: "phone" %>
+      </div>
 
-    <div class="col-md-6 right-card">
-      <%= image_tag "gustave.svg", class: "logo" %>
-      <h1 class="punchline">Gustave,<br>votre sommelier virtuel.</h1>
+      <div class="col-md-6 right-card">
+        <%= image_tag "gustave.svg", class: "logo" %>
+        <h1 class="punchline">Gustave,<br>votre sommelier virtuel.</h1>
 
-      <div class="phrase"> </div>
+        <div class="phrase"> </div>
 
 
 
-        <%- User.omniauth_providers.each do |provider| %>
-          <%= link_to omniauth_authorize_path(User, provider), class: "button button-facebook facebook-connect" do %>
-            <i class="fa fa-facebook" aria-hidden="true"></i>Se connecter Facebook
+          <%- User.omniauth_providers.each do |provider| %>
+            <%= link_to omniauth_authorize_path(User, provider), class: "button button-facebook facebook-connect" do %>
+              <i class="fa fa-facebook" aria-hidden="true"></i>Se connecter Facebook
+            <% end %>
           <% end %>
-        <% end %>
 
 
-      <div class='messenger-btn'>
-        <a class='button' href='https://www.messenger.com/t/gustavesommelier' onclick='event.preventDefault(); openMessenger()'>Message Gustave
-          <svg class='icon' viewBox='0 0 800 800' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
-            <path d='M399.494079,0.00274415094 C178.859771,0.00274415094 0.000304955527,167.227237 0.000304955527,373.508113 C0.000304955527,490.856138 57.8859466,595.562774 148.414028,664.036455 L148.414028,806.983343 L284.747446,731.373854 C321.092046,741.545506 359.609962,747.013481 399.494079,747.013481 C620.128386,747.013481 798.987853,579.788988 798.987853,373.508113 C798.987853,167.227237 620.128386,0.00274415094 399.494079,0.00274415094 M441.568386,500.879189L338.245388 393.558495 139.264956 503.581669 357.419975 272.117619 460.742973 379.437297 659.722389 269.414122z'></path>
-          </svg>
-        </a>
-      </div>
-        <div class="contact">
-        <%= link_to 'Contactez-nous', '#' %> |
-        <%= link_to 'Partenaires', 'http://www.platsnetvins.com/', target: "_blank" %> |
-        <%= link_to 'Le Wagon', 'https://www.lewagon.com/', target: "_blank" %>
+        <div class='messenger-btn'>
+          <a class='button' href='https://www.messenger.com/t/gustavesommelier' onclick='event.preventDefault(); openMessenger()'>Message Gustave
+            <svg class='icon' viewBox='0 0 800 800' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
+              <path d='M399.494079,0.00274415094 C178.859771,0.00274415094 0.000304955527,167.227237 0.000304955527,373.508113 C0.000304955527,490.856138 57.8859466,595.562774 148.414028,664.036455 L148.414028,806.983343 L284.747446,731.373854 C321.092046,741.545506 359.609962,747.013481 399.494079,747.013481 C620.128386,747.013481 798.987853,579.788988 798.987853,373.508113 C798.987853,167.227237 620.128386,0.00274415094 399.494079,0.00274415094 M441.568386,500.879189L338.245388 393.558495 139.264956 503.581669 357.419975 272.117619 460.742973 379.437297 659.722389 269.414122z'></path>
+            </svg>
+          </a>
         </div>
-      </div>
+          <div class="contact">
+          <%= link_to 'Contactez-nous', '#' %> |
+          <%= link_to 'Partenaires', 'http://www.platsnetvins.com/', target: "_blank" %> |
+          <%= link_to 'Le Wagon', 'https://www.lewagon.com/', target: "_blank" %>
+          </div>
+        </div>
     </div>
   </div>
 </div>
