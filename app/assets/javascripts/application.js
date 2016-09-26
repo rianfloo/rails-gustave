@@ -31,6 +31,8 @@ $('document').ready(function() {
     $(this).prop("checked", true);
   });
 
+  $('.congratz').delay(2500).fadeOut('slow');
+
 });
 
 

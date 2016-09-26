@@ -20,7 +20,19 @@ h1.punchline {
   font-family: "Josefin Sans";
   font-size: 16px;
   height: 20px;
+  padding-bottom: 50px;
 }
+
+.form-control:focus {
+  border-color: #d64072;
+  box-shadow: none;
+}
+
+.newsletter-sentence {
+  font-family: "Josefin Sans";
+  font-size: 15px;
+}
+
 
 .typed-cursor{
     opacity: 1;
@@ -62,6 +74,11 @@ h1.punchline {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.congratz {
+  padding-top: 10px;
+  color: #d64072;
 }
 
 

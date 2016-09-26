@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   get 'dashboard' => 'pages#dashboard'
   resources :meals, only: [:update]
+  resources :pages, only: [:home, :create]
 
   devise_for :users,
     controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
